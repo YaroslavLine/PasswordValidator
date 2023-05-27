@@ -1,13 +1,11 @@
-﻿using System.Text.RegularExpressions;
-
-string selectedFilePath;
+﻿string selectedFilePath;
 
 while (true)
 {
     Console.WriteLine("\nEnter the path of the selected file:");
     selectedFilePath = Console.ReadLine()!;
 
-    if (selectedFilePath != null && IsValidFilePath(selectedFilePath))
+    if (selectedFilePath != null && FileHelper.IsValidFilePath(selectedFilePath))
     {
         Console.WriteLine("Selected File: " + selectedFilePath);
     }
@@ -25,31 +23,14 @@ while (true)
         continue;
     }
 
-    var validPasswordsCount = lines.Where(line => PasswordValidator.ValidatePassword(line)).Count();
+    var validPasswordsCount = PasswordValidator.GetCountOfValidPasswords(lines);
 
     Console.WriteLine($"Count of valid passwords: {validPasswordsCount}");
     Console.WriteLine("Do you want to continue? y/n");
 
     var pressedKey = Console.ReadKey();
-    if (pressedKey.KeyChar != 'y' || pressedKey.KeyChar != 'Y')
+    if (pressedKey.KeyChar != 'y' && pressedKey.KeyChar != 'Y')
     {
         return;
-    }
-}
-
-static bool IsValidFilePath(string filePath)
-{
-    try
-    {
-        if (!Regex.IsMatch(filePath, @"^[a-zA-Z]:\\"))
-        {
-            return false;
-        }
-
-        return File.Exists(filePath);
-    }
-    catch
-    {
-        return false;
     }
 }

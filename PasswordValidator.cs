@@ -2,7 +2,12 @@ using System.Text.RegularExpressions;
 
 public static class PasswordValidator
 {
-    public static bool ValidatePassword(string line)
+    public static int GetCountOfValidPasswords(string[] fileLines)
+    {
+        return fileLines.Where(line => ValidatePassword(line)).Count();
+    }
+
+    static bool ValidatePassword(string line)
     {
         if (string.IsNullOrEmpty(line))
         {
@@ -15,8 +20,8 @@ public static class PasswordValidator
 
         var rangeFrom = condition.Split('-').FirstOrDefault()?.GetNumber();
         var rangeTo = condition.Split('-').LastOrDefault()?.GetNumber();
-        
-        var occurrences = password!.Count(x => x == letter);
+
+        var occurrences = password?.Count(x => x == letter);
 
         return occurrences >= rangeFrom && occurrences <= rangeTo;
     }
