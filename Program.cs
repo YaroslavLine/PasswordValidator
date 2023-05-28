@@ -2,7 +2,7 @@
 
 while (true)
 {
-    Console.WriteLine("\nEnter the path of the selected file:");
+    Console.WriteLine("\nEnter the path of the selected file:\nFor example: c:\\Passwords.txt ");
     selectedFilePath = Console.ReadLine()!;
 
     if (selectedFilePath != null && FileHelper.IsValidFilePath(selectedFilePath))
